@@ -1,10 +1,11 @@
-import { express } from 'express';
+import express from 'express';
+import { connectDB } from './src/config/database.js';
 
 
 const app = express();
 const PORT = 3000;
 
-app.use(express.JSON());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.send('Servidor funcionando!');
