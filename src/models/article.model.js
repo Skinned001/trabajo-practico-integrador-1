@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 import { UserModel } from "./user.model.js";
 
-export const ArticleModel  = sequelize.define("Post", {
+export const ArticleModel = sequelize.define("Post", {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -16,7 +16,7 @@ export const ArticleModel  = sequelize.define("Post", {
     content: {
         type: DataTypes.TEXT,
         allowNull: false,
-        len: [50]
+        len: [50],
     },
     excerpt: {
         type: DataTypes.STRING(500),
@@ -25,14 +25,6 @@ export const ArticleModel  = sequelize.define("Post", {
     status: {
         type: DataTypes.ENUM("published", "archived"),
         defaultValue: "published",
-    },
-    user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: UserModel,
-            key: "id",
-        },
     },
 },
     {
