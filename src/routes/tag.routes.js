@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { getAllTags, getTagById, createTag, updateTag, deleteTag } from "../controllers/tag.controllers.js";
 
-export const userRoutes = Router();
+export const tagRoutes = Router();
 
 tagRoutes.get("/tags", getAllTags);
 tagRoutes.get("/tags/:id", getTagById);
