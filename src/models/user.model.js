@@ -11,22 +11,12 @@ export const UserModel = sequelize.define("User", {
         type: DataTypes.STRING(20),
         allowNull: false,
         unique: true,
-        validate: {
-            len: {
-                args: [3, 20],
-                msg: "El username debe tener entre 3 y 20 caracteres.",
-            },
-        },
+        len: [3,20],
     },
     email: {
         type: DataTypes.STRING(100),
         allowNull: false,
         unique: true,
-        validate: {
-            isEmail: {
-                msg: "El email debe tener un formato válido.",
-            },
-        },
     },
     password: {
         type: DataTypes.STRING(255),
