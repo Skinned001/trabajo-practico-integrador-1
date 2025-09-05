@@ -10,12 +10,7 @@ export const TagModel = sequelize.define("Tag", {
     name: {
         type: DataTypes.STRING(30),
         allowNull: false,
-        validate: {
-            len: {
-                args: [2, 30],
-                msg: "Nombre tiene que tener mas de 2 caracteres y menos de 30",
-            },
-        },
+        len: [2,30]
     },
 },
     {
@@ -24,5 +19,4 @@ export const TagModel = sequelize.define("Tag", {
         createdAt: "created_at",
         updatedAt: "updated_at",
         deletedAt: "deleted_at",
-    }
-)
+    });

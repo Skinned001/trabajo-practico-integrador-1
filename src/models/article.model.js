@@ -1,9 +1,8 @@
-// src/models/post.model.js
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
-import { UserModel } from "./User.model.js";
+import { UserModel } from "./user.model.js";
 
-export const PostModel = sequelize.define("Post", {
+export const ArticleModel  = sequelize.define("Post", {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -12,22 +11,12 @@ export const PostModel = sequelize.define("Post", {
     title: {
         type: DataTypes.STRING(200),
         allowNull: false,
-        validate: {
-            len: {
-                args: [3, 200],
-                msg: "El título debe tener entre 3 y 200 caracteres.",
-            },
-        },
+        len: [3, 200],
     },
     content: {
         type: DataTypes.TEXT,
         allowNull: false,
-        validate: {
-            len: {
-                args: [50],
-                msg: "El contenido debe tener al menos 50 caracteres.",
-            },
-        },
+        len: [50]
     },
     excerpt: {
         type: DataTypes.STRING(500),
@@ -52,5 +41,7 @@ export const PostModel = sequelize.define("Post", {
         updatedAt: "updated_at",
     });
 
+UserModel.hasMany(ArticleModel, { foreignKey: "user_id", as: "user" });
 
+ArticleModel.belongsTo(UserModel, { foreignKey: "user_id", as: "user" });
 
