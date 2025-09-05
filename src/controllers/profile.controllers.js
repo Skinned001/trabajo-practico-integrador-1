@@ -32,6 +32,48 @@ export const getProfileById = async (req, res) => {
     }
 };
 
+//Crear un perfil
+export const createProfile = async (req, res) => {
+    const { user_id, first_name, last_name } = req.body;
+    try {
+        if (!user_id || !first_name || !last_name) {
+            return res.status(400).json({
+                message: "Error: user_id, first_name y last_name son obligatorios.",
+                error: "Bad request",
+                statusCode: 400,
+            });
+        }
+        const user = await UserModel.findByPk(user_id);
+        if (!user) {
+            return res.status(404).json({
+                message: "Error: Usuario no encontrado.",
+                error: "Not Found",
+                statusCode: 404,
+            });
+        }
+        const existingProfile = await ProfileModel.findOne({ where: { user_id } });
+        if (existingProfile) {
+            return res.status(400).json({
+                message: "Error: Este usuario ya tiene un perfil.",
+                error: "Bad request",
+                statusCode: 400,
+            });
+        }
+        const validatedData = matchedData(req, { locations: ["body"] });
+        console.log("Los datos validados son:", validatedData);
+        const newProfile = await ProfileModel.create({
+            ...validatedData,
+            user_id,
+        });
+        res.status(201).json({
+            message: "Perfil creado correctamente.",
+            profile: newProfile,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 // Actualizar un perfil
 export const updateProfile = async (req, res) => {
     const profileID = parseInt(req.params.id);

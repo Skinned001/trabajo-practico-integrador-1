@@ -5,7 +5,7 @@ export const tagRoutes = Router();
 
 tagRoutes.get("/tags", getAllTags);
 tagRoutes.get("/tags/:id", getTagById);
-tagRoutes.post("/tags/:", createTag);
+tagRoutes.post("/tags/", createTag);
 tagRoutes.put("/tags/:id", updateTag);
 tagRoutes.delete("/tags/:id",deleteTag);
 
