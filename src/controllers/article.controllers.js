@@ -35,6 +35,7 @@ export const getArticleById = async (req, res) => {
     }
 };
 
+//Crea un articulo
 export const createArticle = async (req, res) => {
     const { title, content, excerpt, status } = req.body;
     if (!content) {
@@ -70,7 +71,7 @@ export const createArticle = async (req, res) => {
     }
 };
 
-
+//Actualiza un articulo
 export const updateArticle = async (req, res) => {
     const articleID = parseInt(req.params.id);
     const { title, content, excerpt, status } = req.body;
@@ -110,6 +111,7 @@ export const updateArticle = async (req, res) => {
     }
 };
 
+//Borra un articulo
 export const deleteArticle = async (req, res) => {
     const articleID = parseInt(req.params.id);
     const findID = await ArticleModel.findByPk(articleID);

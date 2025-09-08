@@ -36,14 +36,12 @@ export const getProfileById = async (req, res) => {
 //Crear un perfil
 export const createProfile = async (req, res) => {
     try {
-        // Tomo los datos del body
         const { user_id, first_name, last_name, biography, avatar_url, birth_date } = req.body;
         if (!user_id || !first_name || !last_name) {
             return res.status(400).json({
                 message: "user_id, first_name y last_name son obligatorios",
             });
         }
-        // Crear perfil
         const newProfile = await ProfileModel.create({
             user_id,
             first_name,
