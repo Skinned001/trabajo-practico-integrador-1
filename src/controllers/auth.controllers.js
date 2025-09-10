@@ -1,15 +1,10 @@
 import jwt from "jsonwebtoken";
-import { PersonModel } from "../models/person.model.js";
 import { UserModel } from "../models/user.model.js";
 import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
 
 export const register = async (req, res) => {
-  const { name, lastname, username, email, password } = req.body;
+  const { username, email, password } = req.body;
   try {
-    const person = await PersonModel.create({
-      name: name,
-      lastname: lastname,
-    });
 
     const hashedPassword = await hashPassword(password);
 
@@ -17,7 +12,6 @@ export const register = async (req, res) => {
       username: username,
       email: email,
       password: hashedPassword,
-      person_id: person.id,
     });
 
     res.status(201).json({
