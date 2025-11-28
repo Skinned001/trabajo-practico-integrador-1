@@ -4,23 +4,49 @@ import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js";
 import { generateToken } from "../helpers/jwt.helper.js";
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const {
+    username,
+    email,
+    password,
+    first_name,
+    last_name,
+    biography,
+    avatar_url,
+    birthday,
+  } = req.body;
   try {
-
     const hashedPassword = await hashPassword(password);
 
-    await UserModel.create({
+    const newUser = await UserModel.create({
       username: username,
       email: email,
       password: hashedPassword,
     });
 
+    const userId = newUser.id; // crear el perfil asociado usando el userId
+
+    const newProfile = await ProfileModel.create({
+      user_id: userId,
+      first_name: first_name,
+      last_name: last_name,
+      biography: biography || null, 
+      avatar_url: avatar_url || null,
+      birthday: birthday || null,
+    }); 
+
     res.status(201).json({
-      msg: "usuario creado correctamente",
+      msg: "Usuario y perfil creados correctamente",
+      user: {
+        id: userId,
+        username: username,
+        email: email,
+      },
+      profile: newProfile,
     });
   } catch (error) {
+    console.log(error); 
     res.status(500).json({
-      msg: "Error interno del servidor",
+      msg: "Error interno del servidor al crear usuario/perfil",
     });
   }
 };

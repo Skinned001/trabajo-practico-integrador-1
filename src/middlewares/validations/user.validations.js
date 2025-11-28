@@ -1,5 +1,5 @@
 import { body, param } from "express-validator";
-import { UserModel } from "../../models/user.model";
+import { UserModel } from "../../models/user.model.js";
 import { Op } from "sequelize";
 
 
@@ -9,7 +9,7 @@ export const createUserValidation = [
         .withMessage("El campo Username es obligatorio")
         .isLength({ min: 3, max: 20 })
         .custom(async (value) => {
-            const userExists = await UserModel.findOne({ where: { user: value } });
+            const userExists = await UserModel.findOne({ where: { username: value } });
             if (userExists) {
                 throw new Error("Ese nombre de usuario ya esta tomado.");
             }

@@ -1,11 +1,29 @@
 import { Router } from "express";
-import { getAllUsers, getUserById, updateUser, deleteUser } from "../controllers/user.controllers.js";
+import {login,logout,register,profile,updateProfile} from "../controllers/auth.controllers.js";
+import { authMiddleware } from "../middlewares/auth.js";
+import { createUserValidation } from "../middlewares/validations/user.validations.js";
+import { validator } from "../middlewares/validations/validator/validator.js";
+import {createProfileValidation,updateProfileValidation} from "../middlewares/validations/profile.validations.js";
 
-export const userRoutes = Router();
+export const authRoutes = Router();
 
-userRoutes.get("/users", getAllUsers);
-userRoutes.get("/users/:id", getUserById);
-userRoutes.put("/users/:id", updateUser);
-userRoutes.delete("/users/:id",deleteUser);
+authRoutes.post(
+  "/register",
+  createUserValidation,
+  createProfileValidation,
+  validator,
+  register
+);
+authRoutes.post("/login", login);
+authRoutes.post("/logout", authMiddleware, logout);
 
-export default userRoutes;
+authRoutes.get("/profile", authMiddleware, profile);
+authRoutes.put(
+  "/profile",
+  authMiddleware,
+  updateProfileValidation,
+  validator,
+  updateProfile
+);
+
+export default authRoutes;
