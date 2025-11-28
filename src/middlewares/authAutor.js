@@ -1,5 +1,4 @@
 import { ArticleModel } from "../models/article.model.js";
-import { authAdminMiddleware } from "./authAdmin.js";
 
 export const ownerMiddleware = async (req, res, next) => {
   try {
