@@ -1,5 +1,5 @@
 import { body, param } from "express-validator";
-import { UserModel } from "../../models/User.model";
+import { UserModel } from "../../models/user.model";
 import { Op } from "sequelize";
 
 
